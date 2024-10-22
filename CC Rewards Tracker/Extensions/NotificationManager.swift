@@ -83,6 +83,7 @@ struct NotificationManager {
     }
     
     static func schedulerReminderNotifications(context: NSManagedObjectContext) {
+        scheduleReminderDaysBefore(context: context, daysBefore: 2)
         scheduleReminderDaysBefore(context: context, daysBefore: 7)
         scheduleReminderDaysBefore(context: context, daysBefore: 14)
     }
@@ -96,9 +97,9 @@ struct NotificationManager {
             content.title = "Rewards are good!"
             content.body = "Great job keeping up with using your rewards! You're all set!"
         } else {
-            content.title = "Rewards Expiring Soon!"
+            content.title = "Rewards Expiring in \(daysBefore) Days!"
             let rewardNames = expiringRewards.map { $0.title! }
-            content.body = "The following rewards are expiring soon: \(rewardNames.joined(separator: ", "))."
+            content.body = "Check on these rewards: \(rewardNames.joined(separator: ", "))."
         }
         content.sound = .default
         
