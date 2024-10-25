@@ -97,6 +97,9 @@ struct ListRowView: View {
         else if (reward.cardType == "Delta Reserve") {
             return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
         }
+        else if (reward.cardType == "Hilton Aspire") {
+            return Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
+        }
         else{
             return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
