@@ -14,6 +14,8 @@ struct SettingsView: View {
     @Binding var isSettingsPresented: Bool
     
     @State private var showPrefillGoldAlert = false
+    @State private var showPrefillHiltonAspireAlert = false
+    @State private var showPrefillRicardoAlert = false
     @State private var showResetGoldAlert = false
     
     let currentYear: Int = Calendar.current.component(.year, from: Date())
@@ -59,6 +61,53 @@ struct SettingsView: View {
             }
             
             Button(action: {
+                showPrefillHiltonAspireAlert = true
+            }) {
+                Text("Add Hilton Aspire Rewards")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .alert(isPresented: $showPrefillHiltonAspireAlert) {
+                Alert(
+                    title: Text("Add Hilton Aspire Rewards"),
+                    message: Text("Do you want to prefill all Amex Hilton Aspire rewards?"),
+                    primaryButton: .destructive(Text("Add My Rewards")) {
+                        updatePrefillHiltonAspireRewards()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+            
+            Button(action: {
+                showPrefillRicardoAlert = true
+            }) {
+                Text("Add Ricardo's Rewards")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .alert(isPresented: $showPrefillRicardoAlert) {
+                Alert(
+                    title: Text("Add Ricardo's Rewards"),
+                    message: Text("Do you want to prefill all Amex rewards? Don't click this more than once or it may reset previous run."),
+                    primaryButton: .destructive(Text("Add My Rewards")) {
+                        updatePrefillGoldRewards()
+                        updatePrefillPlatinumRewards()
+                        updatePrefillDeltaPlatinumRewards()
+                        updatePrefillHiltonSurpassRewards()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+            
+            Button(action: {
                 showResetGoldAlert = true
             }) {
                 Text("Reset Gold Rewards")
@@ -74,7 +123,7 @@ struct SettingsView: View {
                     title: Text("Reset Gold Rewards"),
                     message: Text("Do you want to reset all Amex Gold rewards? This action cannot be undone."),
                     primaryButton: .destructive(Text("Reset Gold Rewards")) {
-                        resetGoldRewards()
+                        resetAllRewards()
                     },
                     secondaryButton: .cancel()
                 )
@@ -104,8 +153,8 @@ struct SettingsView: View {
         }
         
         let annualRewardTemplates = [
-            RewardTemplate(title: "Rest Credit 1/2", details: "Jan - Jun Resy Credit", value: 50, year: currentYear, cardType: cardType),
-            RewardTemplate(title: "Rest Credit 2/2", details: "Jul - Dec Resy Credit", value: 50, year: currentYear, cardType: cardType)
+            RewardTemplate(title: "Resy Credit 1/2", details: "Jan - Jun Resy Credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Resy Credit 2/2", details: "Jul - Dec Resy Credit", value: 50, year: currentYear, cardType: cardType)
         ]
         
         for template in annualRewardTemplates {
@@ -118,10 +167,123 @@ struct SettingsView: View {
         saveContext()
     }
     
-    private func resetGoldRewards() {
+    private func updatePrefillPlatinumRewards() -> Void {
+        let cardType = "Platinum"
+        
+        let monthlyRewardTemplates = [
+            RewardTemplate(title: "Streaming Credit", details: "Monthly streaming credit", value: 20, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Uber Credit", details: "Monthly Uber Cash in-app", value: 15, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in monthlyRewardTemplates {
+            for month in 1...12 {
+                let newReward: Reward = createReward(rewardTemplate: template)
+                newReward.recurrencePeriod = "month"
+                newReward.month = Int16(month)
+                newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: month)
+            }
+        }
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Airline Fee Credit", details: "Airline fee credit on your selected airline", value: 200, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hotel Credit", details: "Annual FHR / THC hotel credit", value: 200, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "CLEAR Plus Credit", details: "Annual CLEAR credit", value: 199, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Saks Credit 1/2", details: "Jan - Jun Saks Credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Saks Credit 2/2", details: "Jul - Dec Saks Credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "December Uber Bonus", details: "Extra Uber Cash in Dec", value: 20, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Equinox Credit", details: "Annual Equinox credit", value: 300, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
+    private func updatePrefillDeltaPlatinumRewards() -> Void {
+        let cardType = "Delta Reserve"
+        
+        let monthlyRewardTemplates = [
+            RewardTemplate(title: "Resy Credit", details: "Monthly Resy credit", value: 10, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Rideshare Credit", details: "Monthly Uber / Lyft credit", value: 10, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in monthlyRewardTemplates {
+            for month in 1...12 {
+                let newReward: Reward = createReward(rewardTemplate: template)
+                newReward.recurrencePeriod = "month"
+                newReward.month = Int16(month)
+                newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: month)
+            }
+        }
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Delta Companion", details: "JAnnual companion certificate", value: 500, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Stays Credit", details: "Annual Delta Stays credit", value: 150, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
+    private func updatePrefillHiltonSurpassRewards() -> Void {
+        let cardType = "Delta Gold"
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Hilton Credit Q1", details: "Jan - Mar Hilton credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hilton Credit Q2", details: "Apr - Jun Hilton credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hilton Credit Q3", details: "Jul - Sep Hilton credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hilton Credit Q4", details: "Oct - Dec Hilton credit", value: 50, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
+    private func updatePrefillHiltonAspireRewards() -> Void {
+        let cardType = "Hilton Aspire"
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Diamond Status", details: "Upgraded to Hilton Diamond", value: 0, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "CLEAR Credit", details: "CLEAR credit for companion", value: 199, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Free Hilton Night", details: "Free night certificate", value: 200, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hilton Credit 1/2", details: "Jan - Jun Hilton Credit", value: 200, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Hilton Credit 2/2", details: "Jul - Dec Hilton Credit", value: 200, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Airline Credit Q1", details: "Jan - Mar airline credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Airline Credit Q2", details: "Apr - Jun airline credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Airline Credit Q3", details: "Jul - Sep airline credit", value: 50, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Airline Credit Q4", details: "Oct - Dec airline credit", value: 50, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
+    private func resetAllRewards() {
         let requestGoldRewards = NSFetchRequest<Reward>()
         requestGoldRewards.entity = Reward.entity()
-        requestGoldRewards.predicate = NSPredicate(format: "cardType == \"Gold\"")
         do {
             let rewardsToDelete: [Reward] = try viewContext.fetch(requestGoldRewards)
             rewardsToDelete.forEach(viewContext.delete)

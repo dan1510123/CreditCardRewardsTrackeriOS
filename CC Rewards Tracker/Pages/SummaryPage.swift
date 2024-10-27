@@ -32,6 +32,8 @@ struct SummaryPage: View {
                                      year: year)
                     ProgressTileView(annualFee: 325, rewardType: "Gold",
                                      year: year)
+                    ProgressTileView(annualFee: 550, rewardType: "Hilton Aspire",
+                                     year: year)
                     ProgressTileView(annualFee: 650, rewardType: "Delta Reserve",
                                      year: year)
                     ProgressTileView(annualFee: 150, rewardType: "Delta Gold",
