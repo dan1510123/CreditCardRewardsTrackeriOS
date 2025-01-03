@@ -76,6 +76,9 @@ struct ListRowView: View {
         else if (reward.cardType == "Delta Reserve") {
             return Image("deltaReserveCardIcon")
         }
+        else if (reward.cardType == "Hilton Aspire") {
+            return Image("hiltonAspireCardIcon")
+        }
         else{
             return Image("")
         }

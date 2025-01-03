@@ -76,7 +76,7 @@ struct ProgressBarWrapped: View {
             return Image("deltaReserveCardIcon")
         }
         else if (cardType == "Hilton Aspire") {
-            return Image("creditCardIcon")
+            return Image("hiltonAspireCardIcon")
         }
         else {
             return Image("creditCardIcon")
