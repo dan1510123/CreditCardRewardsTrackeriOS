@@ -85,6 +85,32 @@ struct SettingsView: View {
             Button(action: {
                 showPrefillRicardoAlert = true
             }) {
+                Text("Add Dan's Rewards")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .alert(isPresented: $showPrefillRicardoAlert) {
+                Alert(
+                    title: Text("Add Dan's Rewards"),
+                    message: Text("Do you want to prefill all Amex rewards? Don't click this more than once or it may reset previous run."),
+                    primaryButton: .destructive(Text("Add My Rewards")) {
+                        updatePrefillGoldRewards()
+                        updatePrefillPlatinumRewards()
+                        updatePrefillDeltaGoldRewards()
+                        updatePrefillDeltaReserveRewards()
+                        updatePrefillHiltonAspireRewards()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+            
+            Button(action: {
+                showPrefillRicardoAlert = true
+            }) {
                 Text("Add Ricardo's Rewards")
                     .font(.title2)
                     .frame(maxWidth: .infinity)
@@ -204,6 +230,41 @@ struct SettingsView: View {
         saveContext()
     }
     
+    private func updatePrefillDeltaReserveRewards() -> Void {
+        let cardType = "Delta Reserve"
+        
+        let monthlyRewardTemplates = [
+            RewardTemplate(title: "Resy Credit", details: "Monthly Resy credit", value: 20, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Rideshare Credit", details: "Monthly Uber / Lyft credit", value: 10, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in monthlyRewardTemplates {
+            for month in 1...12 {
+                let newReward: Reward = createReward(rewardTemplate: template)
+                newReward.recurrencePeriod = "month"
+                newReward.month = Int16(month)
+                newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: month)
+            }
+        }
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Delta Club Access", details: "Delta Sky Club Access", value: 0, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Club Guest", details: "Delta Sky Club 4 Guests", value: 100, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Free Delta Bags", details: "Delta Free Checked Baggage", value: 150, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Companion", details: "Annual companion certificate", value: 500, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Stays Credit", details: "Annual Delta Stays credit", value: 200, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
     private func updatePrefillDeltaPlatinumRewards() -> Void {
         let cardType = "Delta Reserve"
         
@@ -222,7 +283,25 @@ struct SettingsView: View {
         }
         
         let annualRewardTemplates = [
-            RewardTemplate(title: "Delta Companion", details: "JAnnual companion certificate", value: 500, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Companion", details: "Annual companion certificate", value: 500, year: currentYear, cardType: cardType),
+            RewardTemplate(title: "Delta Stays Credit", details: "Annual Delta Stays credit", value: 150, year: currentYear, cardType: cardType)
+        ]
+        
+        for template in annualRewardTemplates {
+            let newReward: Reward = createReward(rewardTemplate: template)
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: currentYear, month: 12)
+            newReward.month = -1
+        }
+        
+        saveContext()
+    }
+    
+    private func updatePrefillDeltaGoldRewards() -> Void {
+        let cardType = "Delta Gold"
+        
+        let annualRewardTemplates = [
+            RewardTemplate(title: "Delta Flight Credit", details: "$200 flight credit for $10k spend", value: 200, year: currentYear, cardType: cardType),
             RewardTemplate(title: "Delta Stays Credit", details: "Annual Delta Stays credit", value: 150, year: currentYear, cardType: cardType)
         ]
         
