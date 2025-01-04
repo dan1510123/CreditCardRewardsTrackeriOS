@@ -63,6 +63,15 @@ struct FullTabView: View {
                             Text("Limited Time")
                         }
                     }
+                
+                LazyView(SettingsPage(viewContext: viewContext, adminMode: $adminMode))
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "gear")
+                                .font(.system(size: 22))
+                            Text("Settings")
+                        }
+                    }
             }
             .accentColor(selectedTabColor)
             .onAppear {

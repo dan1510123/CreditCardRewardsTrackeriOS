@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A348" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24B91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CardType" representedClassName="CardType" syncable="YES" codeGenerationType="class">
+        <attribute name="annualFee" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cardName" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Reward" representedClassName="Reward" syncable="YES" codeGenerationType="class">
         <attribute name="cardType" optional="YES" attributeType="String"/>
         <attribute name="details" optional="YES" attributeType="String"/>

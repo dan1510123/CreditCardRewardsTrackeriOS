@@ -80,7 +80,7 @@ struct ListRowView: View {
             return Image("hiltonAspireCardIcon")
         }
         else{
-            return Image("")
+            return Image("creditCardIcon")
         }
     }
     

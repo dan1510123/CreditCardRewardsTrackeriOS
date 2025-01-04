@@ -14,6 +14,9 @@
 		0967ED172CC851AE00EF4DFA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0967ED162CC851AA00EF4DFA /* NotificationManager.swift */; };
 		098A71CC26897E4B00DE0134 /* ProgressBarWrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098A71CB26897E4B00DE0134 /* ProgressBarWrapped.swift */; };
 		09C2EE9F26751836009D992B /* MonthlyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2EE9E26751836009D992B /* MonthlyListPage.swift */; };
+		09C964A52D28D1910053772B /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A42D28D1910053772B /* SettingsPage.swift */; };
+		09C964A72D28D5220053772B /* EditCardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A62D28D5220053772B /* EditCardSettingsView.swift */; };
+		09C964A92D28D57A0053772B /* EditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A82D28D57A0053772B /* EditCardsView.swift */; };
 		09CEE6F72CC6AC1A00893D74 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEE6F62CC6AC1400893D74 /* SettingsView.swift */; };
 		09DB186826785F13002203D1 /* SummaryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB186726785F13002203D1 /* SummaryPage.swift */; };
 		09DB186A267860EB002203D1 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB1869267860EB002203D1 /* ProgressBar.swift */; };
@@ -37,6 +40,9 @@
 		0967ED162CC851AA00EF4DFA /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		098A71CB26897E4B00DE0134 /* ProgressBarWrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarWrapped.swift; sourceTree = "<group>"; };
 		09C2EE9E26751836009D992B /* MonthlyListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyListPage.swift; sourceTree = "<group>"; };
+		09C964A42D28D1910053772B /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
+		09C964A62D28D5220053772B /* EditCardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardSettingsView.swift; sourceTree = "<group>"; };
+		09C964A82D28D57A0053772B /* EditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardsView.swift; sourceTree = "<group>"; };
 		09CEE6F62CC6AC1400893D74 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		09DB186726785F13002203D1 /* SummaryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryPage.swift; sourceTree = "<group>"; };
 		09DB1869267860EB002203D1 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 				0927702F2CC57A1B00EF949F /* LimitedTimeListPage.swift */,
 				09F6E4192674606500F37EC9 /* AddRewardPage.swift */,
 				09DB186726785F13002203D1 /* SummaryPage.swift */,
+				09C964A42D28D1910053772B /* SettingsPage.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -140,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				09CEE6F62CC6AC1400893D74 /* SettingsView.swift */,
+				09C964A62D28D5220053772B /* EditCardSettingsView.swift */,
+				09C964A82D28D57A0053772B /* EditCardsView.swift */,
 				09F6E41B2674865500F37EC9 /* FullTabView.swift */,
 				0909BAD02CC4985900484517 /* LazyView.swift */,
 				09F6E40026744B4900F37EC9 /* ListView.swift */,
@@ -222,6 +231,7 @@
 				09F6E40126744B4900F37EC9 /* ListView.swift in Sources */,
 				09DB186A267860EB002203D1 /* ProgressBar.swift in Sources */,
 				09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */,
+				09C964A92D28D57A0053772B /* EditCardsView.swift in Sources */,
 				0909BAD12CC4985B00484517 /* LazyView.swift in Sources */,
 				098A71CC26897E4B00DE0134 /* ProgressBarWrapped.swift in Sources */,
 				09CEE6F72CC6AC1A00893D74 /* SettingsView.swift in Sources */,
@@ -230,11 +240,13 @@
 				090531F42676C6D9008211B3 /* AnnualListPage.swift in Sources */,
 				09F6E41C2674865500F37EC9 /* FullTabView.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* CC_Rewards_TrackerApp.swift in Sources */,
+				09C964A52D28D1910053772B /* SettingsPage.swift in Sources */,
 				0927702E2CC5645600EF949F /* Extensions.swift in Sources */,
 				0967ED172CC851AE00EF4DFA /* NotificationManager.swift in Sources */,
 				092770302CC57A1B00EF949F /* LimitedTimeListPage.swift in Sources */,
 				09DB186826785F13002203D1 /* SummaryPage.swift in Sources */,
 				09C2EE9F26751836009D992B /* MonthlyListPage.swift in Sources */,
+				09C964A72D28D5220053772B /* EditCardSettingsView.swift in Sources */,
 				09F6E40F26744C4200F37EC9 /* Rewards.xcdatamodeld in Sources */,
 				09DB186C267862D7002203D1 /* ProgressTileView.swift in Sources */,
 			);
