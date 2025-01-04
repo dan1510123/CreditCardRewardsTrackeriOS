@@ -1,5 +1,5 @@
 //
-//  SummaryView.swift
+//  SummaryTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/14/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct SummaryPage: View {
+struct SummaryTab: View {
     
     @Binding var adminMode: Bool
     

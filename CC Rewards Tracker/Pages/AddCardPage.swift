@@ -1,5 +1,5 @@
 //
-//  AddMRView.swift
+//  AddCardPage.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.

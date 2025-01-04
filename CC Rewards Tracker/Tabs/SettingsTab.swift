@@ -1,5 +1,5 @@
 //
-//  SettingsPage.swift
+//  SettingsTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/14/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct SettingsPage: View {
+struct SettingsTab: View {
     
     @Binding var adminMode: Bool
     
@@ -31,7 +31,7 @@ struct SettingsPage: View {
                         .padding()
                     
                     NavigationLink(
-                        destination: EditCardsView(viewContext: viewContext),
+                        destination: EditCardsPage(viewContext: viewContext),
                         label: {
                             Text("Edit Tracked Cards")
                         })

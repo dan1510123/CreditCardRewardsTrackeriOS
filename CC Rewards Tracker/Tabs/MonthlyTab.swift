@@ -1,5 +1,5 @@
 //
-//  MRListPagesView.swift
+//  MonthlyTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/12/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct MonthlyListPage: View {
+struct MonthlyTab: View {
     
     @State var month: Int = 1
     @Binding var year: Int

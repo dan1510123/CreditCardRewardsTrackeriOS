@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  FullTabView.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
@@ -28,7 +28,7 @@ struct FullTabView: View {
                 .edgesIgnoringSafeArea(.all)
             
             TabView {
-                LazyView(SummaryPage(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
+                LazyView(SummaryTab(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet.rectangle")
@@ -37,7 +37,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(AnnualListPage(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
+                LazyView(AnnualTab(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar.circle")
@@ -46,7 +46,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(MonthlyListPage(year: $selectedYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode))
+                LazyView(MonthlyTab(year: $selectedYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar")
@@ -55,7 +55,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(LimitedTimeListPage(viewContext: viewContext, adminMode: $adminMode))
+                LazyView(LimitedTimeTab(viewContext: viewContext, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "clock.arrow.circlepath")
@@ -64,7 +64,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(SettingsPage(viewContext: viewContext, adminMode: $adminMode))
+                LazyView(SettingsTab(viewContext: viewContext, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "gear")

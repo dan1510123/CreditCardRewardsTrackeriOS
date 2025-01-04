@@ -1,5 +1,5 @@
 //
-//  AnnualListView.swift
+//  LimitedTimeTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/13/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct LimitedTimeListPage: View {
+struct LimitedTimeTab: View {
     
     @Binding var adminMode: Bool
     

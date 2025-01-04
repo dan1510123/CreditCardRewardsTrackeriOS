@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct AnnualListPage: View {
+struct AnnualTab: View {
     
     @Binding var adminMode: Bool
     

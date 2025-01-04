@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  EditCardTypePage.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct EditCardSettingsView: View {
+struct EditCardTypePage: View {
     @Environment(\.presentationMode) private var presentationMode
     let viewContext: NSManagedObjectContext
     
