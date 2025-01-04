@@ -16,7 +16,7 @@ struct AddRewardPage: View {
     
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
-    @State var selectedYear: Int = 2024
+    @State var selectedYear: Int = 2025
     @State var cardType: String = "Gold"
     @State var valueFieldText: String = ""
     
@@ -50,7 +50,7 @@ struct AddRewardPage: View {
                 
                 if(self.recurrencePeriod == "year" || self.recurrencePeriod == "month") {
                     Picker("Year", selection: $selectedYear) {
-                        ForEach([2022, 2023, 2024], id: \.self) {
+                        ForEach([2022, 2023, 2024, 2025, 2026], id: \.self) {
                             Text(String($0))
                         }
                     }
