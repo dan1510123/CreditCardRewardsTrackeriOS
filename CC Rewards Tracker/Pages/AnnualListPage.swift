@@ -13,14 +13,15 @@ struct AnnualListPage: View {
     @Binding var adminMode: Bool
     
     @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
-    @State var year: Int = Calendar.current.component(.year, from: Date())
+    @Binding var year: Int
     @State var month: Int = -1
     
     let viewContext: NSManagedObjectContext
     let recurrencePeriod: String = "year"
     
-    init(viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
+    init(viewContext: NSManagedObjectContext, year: Binding<Int>, adminMode: Binding<Bool>) {
         self.viewContext = viewContext
+        self._year = year
         self._adminMode = adminMode
     }
     
