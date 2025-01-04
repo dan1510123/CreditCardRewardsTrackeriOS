@@ -13,7 +13,23 @@ struct AddCardPage: View {
     
     @State var cardNameFieldText: String = ""
     @State var annualFeeFieldText: String = ""
+    @State var iconName: String = "creditCardIcon"
     @State var selectedColor: Color = Color.gray
+    
+    let presets = CardTypePresets().getPresets()
+    
+    let defaultPreset: CardTypePreset = CardTypePreset(
+        name: "Choose a Card Preset",
+        annualFee: 0,
+        iconName: "creditCardIcon",
+        color: Color.white
+    )
+    
+    @State var selectedPreset: CardTypePreset
+    
+    init() {
+        selectedPreset = defaultPreset
+    }
     
     var body: some View {
         VStack {
@@ -22,6 +38,23 @@ struct AddCardPage: View {
                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: 250, maxHeight: 50)
                 .font(.title)
+            
+            Picker("Card Presets", selection: $selectedPreset) {
+                Text("Choose a Card Preset")
+                    .tag(defaultPreset)
+                ForEach(presets, id: \.self) { preset in
+                    Text(preset.name)
+                        .tag(preset)
+                }
+            }
+            .onChange(of: selectedPreset) { newPresetSelection in
+                self.cardNameFieldText = newPresetSelection.name
+                self.annualFeeFieldText = String(newPresetSelection.annualFee)
+                self.iconName = newPresetSelection.iconName
+                self.selectedColor = newPresetSelection.color
+            }
+            .pickerStyle(MenuPickerStyle())
+            
             Form {
                 Section(header: Text("Card Name")) {
                     TextField("Card Name", text: $cardNameFieldText)
@@ -61,8 +94,6 @@ struct AddCardPage: View {
         }
         .background(Color(UIColor.systemGroupedBackground))
     }
-        
-    
     
     private func onSavePressed() {
         let newCardType = CardType(context: viewContext)

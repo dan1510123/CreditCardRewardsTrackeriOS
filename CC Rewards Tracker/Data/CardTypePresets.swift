@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUICore
 
-struct CardTypePreset {
+struct CardTypePreset : Hashable {
     let name: String
     let annualFee: Double
     let iconName: String
@@ -18,7 +18,7 @@ struct CardTypePreset {
 class CardTypePresets {
     static let shared = CardTypePresets()
 
-    private func getPresets() -> [CardTypePreset] {
+    public func getPresets() -> [CardTypePreset] {
         let presets = [
             CardTypePreset(
                 name: "Amex Gold",

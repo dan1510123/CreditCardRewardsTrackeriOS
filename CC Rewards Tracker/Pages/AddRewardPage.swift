@@ -104,7 +104,8 @@ struct AddRewardPage: View {
                 VStack {
                     if !cardFetchRequest.wrappedValue.isEmpty {
                         Picker("Card", selection: $selectedCardType) {
-                            Text("None").tag("None")
+                            Text("None")
+                                .tag("None")
                             ForEach(cardFetchRequest.wrappedValue, id: \.self) { card in
                                 Text(card.cardName ?? "")
                                     .tag(card.cardName ?? "")
