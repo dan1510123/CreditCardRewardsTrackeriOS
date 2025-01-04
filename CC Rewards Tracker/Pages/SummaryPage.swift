@@ -15,7 +15,7 @@ struct SummaryPage: View {
     @State var isSettingsPresented:Bool = false
     
     let viewContext: NSManagedObjectContext
-    @State var year: Int = Calendar.current.component(.year, from: Date())
+    @Binding var year: Int
     
     var totalFees: Int16 = 0
     var fetchRequest: FetchRequest<CardType>
@@ -24,8 +24,9 @@ struct SummaryPage: View {
         sortDescriptors: []
     ) var cards: FetchedResults<CardType>
     
-    init(viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
+    init(viewContext: NSManagedObjectContext, year: Binding<Int>, adminMode: Binding<Bool>) {
         self.viewContext = viewContext
+        self._year = year
         self._adminMode = adminMode
         
         fetchRequest = FetchRequest<CardType>(entity: CardType.entity(),

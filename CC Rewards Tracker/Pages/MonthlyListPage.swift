@@ -11,8 +11,7 @@ import CoreData
 struct MonthlyListPage: View {
     
     @State var month: Int = 1
-    @State var year: Int = 1
-    
+    @Binding var year: Int
     @Binding var adminMode: Bool
     
     let viewContext: NSManagedObjectContext
@@ -21,10 +20,10 @@ struct MonthlyListPage: View {
     
     let monthNames: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
-    init(year: Int, month: Int, viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
-        self.year = year
+    init(year: Binding<Int>, month: Int, viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
+        self._year = year
         self.month = month
-        self.index = year * 100 + month
+        self.index = year.wrappedValue * 100 + month
         self.viewContext = viewContext
         self._adminMode = adminMode
     }

@@ -14,7 +14,7 @@ struct FullTabView: View {
     @State private var showAdminAlert: Bool = false
     @State private var adminMode: Bool = false
     
-    let currentYear: Int = Calendar.current.component(.year, from: Date())
+    @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
     let currentMonth: Int = Calendar.current.component(.month, from: Date())
     
     // Custom colors
@@ -28,7 +28,7 @@ struct FullTabView: View {
                 .edgesIgnoringSafeArea(.all)
             
             TabView {
-                LazyView(SummaryPage(viewContext: viewContext, adminMode: $adminMode))
+                LazyView(SummaryPage(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet.rectangle")
@@ -37,7 +37,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(AnnualListPage(viewContext: viewContext, adminMode: $adminMode))
+                LazyView(AnnualListPage(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar.circle")
@@ -46,7 +46,7 @@ struct FullTabView: View {
                         }
                     }
                 
-                LazyView(MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode)) 
+                LazyView(MonthlyListPage(year: $selectedYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar")
