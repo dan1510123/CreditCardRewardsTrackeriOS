@@ -26,17 +26,15 @@ struct SettingsPage: View {
         VStack {
             NavigationView {
                 List {
-                    VStack(spacing: 20) {
-                        Text("Settings")
-                            .font(.largeTitle)
-                            .padding()
-                        
-                        NavigationLink(
-                            destination: EditCardsView(viewContext: viewContext),
-                            label: {
-                                Text("Edit Tracked Cards")
-                            })
-                    }
+                    Text("Settings")
+                        .font(.largeTitle)
+                        .padding()
+                    
+                    NavigationLink(
+                        destination: EditCardsView(viewContext: viewContext),
+                        label: {
+                            Text("Edit Tracked Cards")
+                        })
                 }
                 .background(Color.white)
             }

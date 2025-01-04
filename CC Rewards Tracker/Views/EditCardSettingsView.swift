@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct EditCardSettingsView: View {
-    
+    @Environment(\.presentationMode) private var presentationMode
     let viewContext: NSManagedObjectContext
     
     let cardName: String
@@ -36,10 +36,16 @@ struct EditCardSettingsView: View {
                     .padding()
             }
             
-            Button("Save Changes") {
-                print("Changes saved for \(cardName): \(annualFee)")
-                updateCardSetting()
-            }
+            
+            Button(action: updateCardSetting, label: {
+                Text("Save".uppercased())
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.accentColor)
+                    .cornerRadius(10)
+            })
             .foregroundColor(.blue)
         }
         .navigationTitle("Edit \(cardName)")
@@ -62,6 +68,8 @@ struct EditCardSettingsView: View {
         } catch {
             print("Error updating card: \(error.localizedDescription)")
         }
+        
+        self.presentationMode.wrappedValue.dismiss()
     }
     
     func colorToData(_ color: Color) -> Data? {
