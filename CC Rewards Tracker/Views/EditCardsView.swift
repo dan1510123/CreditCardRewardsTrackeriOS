@@ -30,7 +30,7 @@ struct EditCardsView: View {
             List {
                 ForEach(fetchRequest.wrappedValue) { card in
                     NavigationLink(
-                        destination: EditCardSettingsView(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee)),
+                        destination: EditCardSettingsView(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorData: card.cardColor!),
                         label: {
                             HStack {
                                 Text(card.cardName ?? "Error")
@@ -54,7 +54,7 @@ struct EditCardsView: View {
     
     private func getTrailingButton() -> some View {
         Group {
-            NavigationLink("Add Card", destination: AddRewardPage(recurrencePeriod: "annual"))
+            NavigationLink("Add Card", destination: AddCardPage())
         }
     }
     

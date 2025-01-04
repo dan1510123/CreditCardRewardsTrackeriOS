@@ -17,6 +17,7 @@
 		09C964A52D28D1910053772B /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A42D28D1910053772B /* SettingsPage.swift */; };
 		09C964A72D28D5220053772B /* EditCardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A62D28D5220053772B /* EditCardSettingsView.swift */; };
 		09C964A92D28D57A0053772B /* EditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964A82D28D57A0053772B /* EditCardsView.swift */; };
+		09C964AB2D28DDC50053772B /* AddCardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C964AA2D28DDC50053772B /* AddCardPage.swift */; };
 		09CEE6F72CC6AC1A00893D74 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEE6F62CC6AC1400893D74 /* SettingsView.swift */; };
 		09DB186826785F13002203D1 /* SummaryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB186726785F13002203D1 /* SummaryPage.swift */; };
 		09DB186A267860EB002203D1 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB1869267860EB002203D1 /* ProgressBar.swift */; };
@@ -43,6 +44,7 @@
 		09C964A42D28D1910053772B /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		09C964A62D28D5220053772B /* EditCardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardSettingsView.swift; sourceTree = "<group>"; };
 		09C964A82D28D57A0053772B /* EditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardsView.swift; sourceTree = "<group>"; };
+		09C964AA2D28DDC50053772B /* AddCardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardPage.swift; sourceTree = "<group>"; };
 		09CEE6F62CC6AC1400893D74 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		09DB186726785F13002203D1 /* SummaryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryPage.swift; sourceTree = "<group>"; };
 		09DB1869267860EB002203D1 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				090531F32676C6D9008211B3 /* AnnualListPage.swift */,
 				0927702F2CC57A1B00EF949F /* LimitedTimeListPage.swift */,
 				09F6E4192674606500F37EC9 /* AddRewardPage.swift */,
+				09C964AA2D28DDC50053772B /* AddCardPage.swift */,
 				09DB186726785F13002203D1 /* SummaryPage.swift */,
 				09C964A42D28D1910053772B /* SettingsPage.swift */,
 			);
@@ -235,6 +238,7 @@
 				0909BAD12CC4985B00484517 /* LazyView.swift in Sources */,
 				098A71CC26897E4B00DE0134 /* ProgressBarWrapped.swift in Sources */,
 				09CEE6F72CC6AC1A00893D74 /* SettingsView.swift in Sources */,
+				09C964AB2D28DDC50053772B /* AddCardPage.swift in Sources */,
 				09F6E416267459D600F37EC9 /* ListRowView.swift in Sources */,
 				09F6E41A2674606500F37EC9 /* AddRewardPage.swift in Sources */,
 				090531F42676C6D9008211B3 /* AnnualListPage.swift in Sources */,
