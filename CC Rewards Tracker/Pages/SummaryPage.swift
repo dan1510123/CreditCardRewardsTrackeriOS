@@ -16,13 +16,14 @@ struct SummaryPage: View {
     
     let viewContext: NSManagedObjectContext
     @Binding var year: Int
-    
-    var totalFees: Int16 = 0
+
     var fetchRequest: FetchRequest<CardType>
-    @FetchRequest(
-        entity: CardType.entity(),
-        sortDescriptors: []
-    ) var cards: FetchedResults<CardType>
+    @FetchRequest(entity: CardType.entity(), sortDescriptors: [])
+    var cards: FetchedResults<CardType>
+    
+    var totalFees: Int16 {
+        cards.reduce(0) { $0 + $1.annualFee }
+    }
     
     init(viewContext: NSManagedObjectContext, year: Binding<Int>, adminMode: Binding<Bool>) {
         self.viewContext = viewContext
@@ -34,8 +35,6 @@ struct SummaryPage: View {
                 NSSortDescriptor(keyPath: \CardType.annualFee, ascending: false)
             ]
         )
-        
-        self.totalFees = getTotalFees()
     }
     
     var body: some View {
@@ -88,11 +87,6 @@ struct SummaryPage: View {
                 SettingsView(isSettingsPresented: $isSettingsPresented)
             }
         }
-    }
-    
-    
-    private func getTotalFees() -> Int16 {
-        cards.reduce(0) { $0 + $1.annualFee }
     }
     
     private func getLeadingButton() -> some View {
