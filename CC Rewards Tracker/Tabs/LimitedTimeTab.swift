@@ -65,7 +65,7 @@ struct LimitedTimeTab: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add One-Time Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod)).isDetailLink(false)
+                NavigationLink("Add One-Time Reward", destination: AddRewardPage(viewContext: viewContext, recurrencePeriod: recurrencePeriod)).isDetailLink(false)
             }
         }
     }

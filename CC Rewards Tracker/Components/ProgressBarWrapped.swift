@@ -46,7 +46,7 @@ struct ProgressBarWrapped: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("\(rewardType) Rewards")
+                Text("\(rewardType)")
                     .font(.system(size: 24.0))
                     .underline()
                     .padding(.bottom, 10)
@@ -63,20 +63,20 @@ struct ProgressBarWrapped: View {
     }
     
     private func getCardIcon(cardType: String) -> Image {
-        if (cardType == "Gold") {
-            return Image("goldCardIcon")
+        if (cardType == "Amex Gold") {
+            return Image("amexGoldCardIcon")
         }
-        else if (cardType == "Platinum") {
-            return Image("platCardIcon")
+        else if (cardType == "Amex Platinum") {
+            return Image("amexPlatinumCardIcon")
         }
-        else if (cardType == "Delta Gold") {
-            return Image("deltaGoldCardIcon")
+        else if (cardType == "Amex Delta Gold") {
+            return Image("amexDeltaGoldCardIcon")
         }
-        else if (cardType == "Delta Reserve") {
-            return Image("deltaReserveCardIcon")
+        else if (cardType == "Amex Delta Reserve") {
+            return Image("amexDeltaReserveCardIcon")
         }
-        else if (cardType == "Hilton Aspire") {
-            return Image("hiltonAspireCardIcon")
+        else if (cardType == "Amex Hilton Aspire") {
+            return Image("amexHiltonAspireCardIcon")
         }
         else {
             return Image("creditCardIcon")

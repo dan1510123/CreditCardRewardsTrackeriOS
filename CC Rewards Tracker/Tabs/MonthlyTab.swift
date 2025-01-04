@@ -90,7 +90,7 @@ struct MonthlyTab: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Monthly Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod))
+                NavigationLink("Add Monthly Reward", destination: AddRewardPage(viewContext: viewContext, recurrencePeriod: recurrencePeriod))
             } else if month != 12 {
                 Button(action:  {
                     year = year + (Int)(month / 12)

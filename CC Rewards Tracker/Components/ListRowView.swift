@@ -64,20 +64,20 @@ struct ListRowView: View {
     }
     
     private func getCardIcon() -> Image {
-        if (reward.cardType == "Gold") {
-            return Image("goldCardIcon")
+        if (reward.cardType == "Amex Gold") {
+            return Image("amexGoldCardIcon")
         }
-        else if (reward.cardType == "Platinum") {
-            return Image("platCardIcon")
+        else if (reward.cardType == "Amex Platinum") {
+            return Image("amexPlatinumCardIcon")
         }
-        else if (reward.cardType == "Delta Gold") {
-            return Image("deltaGoldCardIcon")
+        else if (reward.cardType == "Amex Delta Gold") {
+            return Image("amexDeltaGoldCardIcon")
         }
-        else if (reward.cardType == "Delta Reserve") {
-            return Image("deltaReserveCardIcon")
+        else if (reward.cardType == "Amex Delta Reserve") {
+            return Image("amexDeltaReserveCardIcon")
         }
-        else if (reward.cardType == "Hilton Aspire") {
-            return Image("hiltonAspireCardIcon")
+        else if (reward.cardType == "Amex Hilton Aspire") {
+            return Image("amexHiltonAspireCardIcon")
         }
         else{
             return Image("creditCardIcon")
@@ -88,19 +88,19 @@ struct ListRowView: View {
         if(redeemed) {
             return Color(#colorLiteral(red: 0, green: 1, blue: 0.4970139265, alpha: 1))
         }
-        else if (reward.cardType == "Gold") {
+        else if (reward.cardType == "Amex Gold") {
             return Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
         }
-        else if (reward.cardType == "Platinum") {
+        else if (reward.cardType == "Amex Platinum") {
             return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
         }
-        else if (reward.cardType == "Delta Gold") {
+        else if (reward.cardType == "Amex Delta Gold") {
             return Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
         }
-        else if (reward.cardType == "Delta Reserve") {
+        else if (reward.cardType == "Amex Delta Reserve") {
             return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
         }
-        else if (reward.cardType == "Hilton Aspire") {
+        else if (reward.cardType == "Amex Hilton Aspire") {
             return Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
         }
         else{

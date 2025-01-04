@@ -83,7 +83,7 @@ struct AnnualTab: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Annual Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod)).isDetailLink(false)
+                NavigationLink("Add Annual Reward", destination: AddRewardPage(viewContext: viewContext, recurrencePeriod: recurrencePeriod)).isDetailLink(false)
             }
             else {
                 Button(action:  {

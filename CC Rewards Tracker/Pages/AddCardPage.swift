@@ -99,7 +99,7 @@ struct AddCardPage: View {
 struct AddCardPage_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddRewardPage(recurrencePeriod: "One-Time")
+            // AddRewardPage(recurrencePeriod: "One-Time")
         }
     }
 }
