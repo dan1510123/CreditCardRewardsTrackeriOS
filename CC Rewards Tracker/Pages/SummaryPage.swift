@@ -17,7 +17,12 @@ struct SummaryPage: View {
     let viewContext: NSManagedObjectContext
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
+    var totalFees: Int16 = 0
     var fetchRequest: FetchRequest<CardType>
+    @FetchRequest(
+        entity: CardType.entity(),
+        sortDescriptors: []
+    ) var cards: FetchedResults<CardType>
     
     init(viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
         self.viewContext = viewContext
@@ -28,16 +33,20 @@ struct SummaryPage: View {
                 NSSortDescriptor(keyPath: \CardType.annualFee, ascending: false)
             ]
         )
+        
+        self.totalFees = getTotalFees()
     }
     
     var body: some View {
         VStack {
             NavigationView {
                 List {
+                    ProgressTileView(annualFee: Float(totalFees), rewardType: "Total",
+                                     year: year)
                     ForEach(fetchRequest.wrappedValue) { cardType in
-                        ProgressTileView(annualFee: Float(cardType.annualFee), rewardType: cardType.cardName!, year: year)
-                        //                    ProgressTileView(annualFee: 1820, rewardType: "Total",
-                        //                                     year: year)
+                        ProgressTileView(annualFee: Float(cardType.annualFee),
+                                         rewardType: cardType.cardName!,
+                                         year: year)
                         //                    ProgressTileView(annualFee: 695, rewardType: "Platinum",
                         //                                     year: year)
                         //                    ProgressTileView(annualFee: 325, rewardType: "Gold",
@@ -78,6 +87,11 @@ struct SummaryPage: View {
                 SettingsView(isSettingsPresented: $isSettingsPresented)
             }
         }
+    }
+    
+    
+    private func getTotalFees() -> Int16 {
+        cards.reduce(0) { $0 + $1.annualFee }
     }
     
     private func getLeadingButton() -> some View {
