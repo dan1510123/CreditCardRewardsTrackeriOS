@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  EditCardsPage.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct EditCardsView: View {
+struct EditCardsPage: View {
     
     let viewContext: NSManagedObjectContext
     
@@ -30,7 +30,7 @@ struct EditCardsView: View {
             List {
                 ForEach(fetchRequest.wrappedValue) { card in
                     NavigationLink(
-                        destination: EditCardSettingsView(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorData: card.cardColor!),
+                        destination: EditCardTypePage(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorData: card.cardColor!),
                         label: {
                             HStack {
                                 Text(card.cardName ?? "Error")

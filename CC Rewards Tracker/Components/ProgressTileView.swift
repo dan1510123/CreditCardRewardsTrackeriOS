@@ -55,19 +55,19 @@ struct ProgressTileView: View {
         if (cardType == "Total") {
             return Color.blue
         }
-        else if (cardType == "Gold") {
+        else if (cardType == "Amex Gold") {
             return Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
         }
-        else if (cardType == "Platinum") {
+        else if (cardType == "Amex Platinum") {
             return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
         }
-        else if (cardType == "Delta Gold") {
+        else if (cardType == "Amex Delta Gold") {
             return Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
         }
-        else if (cardType == "Delta Reserve") {
+        else if (cardType == "Amex Delta Reserve") {
             return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
         }
-        else if (cardType == "Hilton Aspire") {
+        else if (cardType == "Amex Hilton Aspire") {
             return Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
         }
         else{
@@ -83,8 +83,8 @@ struct ProgressTileView: View {
 struct ProgressTileView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ProgressTileView(annualFee: 350, rewardType: "Gold", year: 2021)
-            ProgressTileView(annualFee: 695, rewardType: "Platinum", year: 2021)
+            ProgressTileView(annualFee: 350, rewardType: "Amex Gold", year: 2021)
+            ProgressTileView(annualFee: 695, rewardType: "Amex Platinum", year: 2021)
             ProgressTileView(annualFee: 1045, rewardType: "Total", year: 2021)
         }
     }

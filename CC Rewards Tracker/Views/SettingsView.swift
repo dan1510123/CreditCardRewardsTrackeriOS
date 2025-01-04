@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  SettingsView.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
@@ -161,7 +161,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillGoldRewards() -> Void {
-        let cardType = "Gold"
+        let cardType = "Amex Gold"
         
         let monthlyRewardTemplates = [
             RewardTemplate(title: "Dining Credit", details: "Grubhub, The Cheesecake Factory, Five Guys", value: 10, year: currentYear, cardType: cardType),
@@ -194,7 +194,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillPlatinumRewards() -> Void {
-        let cardType = "Platinum"
+        let cardType = "Amex Platinum"
         
         let monthlyRewardTemplates = [
             RewardTemplate(title: "Streaming Credit", details: "Monthly streaming credit", value: 20, year: currentYear, cardType: cardType),
@@ -231,7 +231,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillDeltaReserveRewards() -> Void {
-        let cardType = "Delta Reserve"
+        let cardType = "Amex Delta Reserve"
         
         let monthlyRewardTemplates = [
             RewardTemplate(title: "Resy Credit", details: "Monthly Resy credit", value: 20, year: currentYear, cardType: cardType),
@@ -266,7 +266,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillDeltaPlatinumRewards() -> Void {
-        let cardType = "Delta Reserve"
+        let cardType = "Amex Delta Platinum"
         
         let monthlyRewardTemplates = [
             RewardTemplate(title: "Resy Credit", details: "Monthly Resy credit", value: 10, year: currentYear, cardType: cardType),
@@ -298,7 +298,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillDeltaGoldRewards() -> Void {
-        let cardType = "Delta Gold"
+        let cardType = "Amex Delta Gold"
         
         let annualRewardTemplates = [
             RewardTemplate(title: "Delta Flight Credit", details: "$200 flight credit for $10k spend", value: 200, year: currentYear, cardType: cardType),
@@ -316,7 +316,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillHiltonSurpassRewards() -> Void {
-        let cardType = "Delta Gold"
+        let cardType = "Amex Delta Gold"
         
         let annualRewardTemplates = [
             RewardTemplate(title: "Hilton Credit Q1", details: "Jan - Mar Hilton credit", value: 50, year: currentYear, cardType: cardType),
@@ -336,7 +336,7 @@ struct SettingsView: View {
     }
     
     private func updatePrefillHiltonAspireRewards() -> Void {
-        let cardType = "Hilton Aspire"
+        let cardType = "Amex Hilton Aspire"
         
         let annualRewardTemplates = [
             RewardTemplate(title: "Diamond Status", details: "Upgraded to Hilton Diamond", value: 0, year: currentYear, cardType: cardType),

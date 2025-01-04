@@ -1,5 +1,5 @@
 //
-//  AnnualListView.swift
+//  LimitedTimeTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/13/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct LimitedTimeListPage: View {
+struct LimitedTimeTab: View {
     
     @Binding var adminMode: Bool
     
@@ -65,7 +65,7 @@ struct LimitedTimeListPage: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add One-Time Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod)).isDetailLink(false)
+                NavigationLink("Add One-Time Reward", destination: AddRewardPage(viewContext: viewContext, recurrencePeriod: recurrencePeriod)).isDetailLink(false)
             }
         }
     }

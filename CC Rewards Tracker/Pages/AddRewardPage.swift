@@ -1,15 +1,18 @@
 //
-//  AddMRView.swift
+//  AddRewardPage.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
 //
 
 import SwiftUI
+import CoreData
 
 struct AddRewardPage: View {
     @Environment(\.presentationMode) private var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
+    let viewContext: NSManagedObjectContext
+    
+    @State private var showInvalidAlert: Bool = false
     
     @State private var isDatePickerPresented: Bool = false
     @State private var selectedDate: Date? = nil
@@ -17,7 +20,7 @@ struct AddRewardPage: View {
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
     @State var selectedYear: Int = 2025
-    @State var cardType: String = "Gold"
+    @State var selectedCardType: String = "None"
     @State var valueFieldText: String = ""
     
     let formatter: NumberFormatter = {
@@ -27,6 +30,20 @@ struct AddRewardPage: View {
         }()
     
     let recurrencePeriod: String
+    
+    
+    var cardFetchRequest: FetchRequest<CardType>
+    
+    init(viewContext: NSManagedObjectContext, recurrencePeriod: String) {
+        self.viewContext = viewContext
+        self.recurrencePeriod = recurrencePeriod
+        
+        self.cardFetchRequest = FetchRequest<CardType>(entity: CardType.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \CardType.annualFee, ascending: false)
+            ]
+        )
+    }
     
     var body: some View {
         ScrollView {
@@ -84,11 +101,29 @@ struct AddRewardPage: View {
                     }
                 }
                 
-                Picker("Card", selection: $cardType) {
-                    ForEach(["Gold", "Platinum", "Delta Gold", "Delta Reserve"], id: \.self) {
-                        Text($0)
+                VStack {
+                    if !cardFetchRequest.wrappedValue.isEmpty {
+                        Picker("Card", selection: $selectedCardType) {
+                            Text("None")
+                                .tag("None")
+                            ForEach(cardFetchRequest.wrappedValue, id: \.self) { card in
+                                Text(card.cardName ?? "")
+                                    .tag(card.cardName ?? "")
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                    } else {
+                        Text("No cards available")
+                            .foregroundColor(.gray)
                     }
                 }
+                .onAppear {
+                    print("Appeared")
+                    if selectedCardType == "", let firstCard = cardFetchRequest.wrappedValue.first?.cardName {
+                        selectedCardType = firstCard
+                    }
+                }
+                .padding()
 
                 TextField("Reward \(recurrencePeriod) Value", text: $valueFieldText)
                     .keyboardType(.numberPad)
@@ -110,10 +145,22 @@ struct AddRewardPage: View {
             }
             .padding(16)
         }
+        .alert(isPresented: $showInvalidAlert) {
+            Alert(
+                title: Text("Invalid Selection"),
+                message: Text("You cannot select 'None' as a card type."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         
     }
     
     private func onSavePressed() {
+        if(selectedCardType == "None") {
+            showInvalidAlert = true
+            return
+        }
+        
         if recurrencePeriod == "year" {
             let newReward: Reward = createReward()
             newReward.recurrencePeriod = "year"
@@ -146,7 +193,7 @@ struct AddRewardPage: View {
         newReward.details = detailsFieldText
         newReward.value = Float(valueFieldText) ?? -1
         newReward.year = Int16(selectedYear)
-        newReward.cardType = cardType
+        newReward.cardType = selectedCardType
         newReward.redeemed = false
         
         return newReward
@@ -188,7 +235,7 @@ struct AddRewardPage: View {
 struct AddRewardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddRewardPage(recurrencePeriod: "One-Time")
+            //AddRewardPage(recurrencePeriod: "One-Time")
         }
     }
 }

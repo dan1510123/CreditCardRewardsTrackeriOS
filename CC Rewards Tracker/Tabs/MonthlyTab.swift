@@ -1,5 +1,5 @@
 //
-//  MRListPagesView.swift
+//  MonthlyTab.swift
 //  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/12/21.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct MonthlyListPage: View {
+struct MonthlyTab: View {
     
     @State var month: Int = 1
     @Binding var year: Int
@@ -90,7 +90,7 @@ struct MonthlyListPage: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Monthly Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod))
+                NavigationLink("Add Monthly Reward", destination: AddRewardPage(viewContext: viewContext, recurrencePeriod: recurrencePeriod))
             } else if month != 12 {
                 Button(action:  {
                     year = year + (Int)(month / 12)
