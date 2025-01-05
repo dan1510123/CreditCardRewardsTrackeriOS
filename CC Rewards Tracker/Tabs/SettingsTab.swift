@@ -35,39 +35,41 @@ struct SettingsTab: View {
                         label: {
                             Text("Edit Tracked Cards")
                         })
+                    
+                    if adminMode {
+                        Button(action: {
+                            self.adminMode.toggle()
+                        }) {
+                            Text("LEAVE ADMIN MODE")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
+                                .clipShape(Capsule())
+                        }
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
+                    }
+                    else {
+                        Button(action: {
+                            self.adminMode.toggle()
+                        }) {
+                            Text("Enter Admin Mode")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color(#colorLiteral(red: 0, green: 0.7854827046, blue: 1, alpha: 1)))
+                                .clipShape(Capsule())
+                        }
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
+                    }
                 }
                 .background(Color.white)
             }
-            if adminMode {
-                Button(action: {
-                    self.adminMode.toggle()
-                }) {
-                    Text("LEAVE ADMIN MODE")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
-                        .clipShape(Capsule())
-                }
-                .padding(.horizontal, 40)
-                .padding(.bottom, 10)
-            }
-            else {
-                Button(action: {
-                    self.adminMode.toggle()
-                }) {
-                    Text("Enter Admin Mode")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(#colorLiteral(red: 0, green: 0.7854827046, blue: 1, alpha: 1)))
-                        .clipShape(Capsule())
-                }
-                .padding(.horizontal, 40)
-                .padding(.bottom, 10)
-            }
+            
         }
     }
 }
