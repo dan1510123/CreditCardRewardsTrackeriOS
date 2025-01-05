@@ -8,34 +8,44 @@
 import SwiftUI
 import CoreData
 
-struct AddRewardPage: View {
+struct UpdateRewardPage: View {
     @Environment(\.presentationMode) private var presentationMode
     let viewContext: NSManagedObjectContext
     
+    let oldRewardTitle: String
+    
     @State private var showInvalidAlert: Bool = false
-    
     @State private var isDatePickerPresented: Bool = false
-    @State private var selectedDate: Date? = nil
     
-    @State private var titleFieldText: String = ""
-    @State private var detailsFieldText: String = ""
-    @State private var selectedYear: Int = 2025
-    @State private var selectedCardType: String = "None"
-    @State private var valueFieldText: String = ""
+    @State private var title: String
+    @State private var details: String
+    @State private var month: String
+    @State private var year: String
+    @State private var cardType: String
+    @State private var value: String
+    @State private var recurrencePeriod: String
+    @State private var expirationDate: Date
+    
+    var cardFetchRequest: FetchRequest<CardType>
     
     let formatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             return formatter
         }()
-    
-    let recurrencePeriod: String
-    
-    var cardFetchRequest: FetchRequest<CardType>
-    
-    init(viewContext: NSManagedObjectContext, recurrencePeriod: String) {
+        
+    init(viewContext: NSManagedObjectContext, reward: Reward) {
         self.viewContext = viewContext
-        self.recurrencePeriod = recurrencePeriod
+        self.oldRewardTitle = reward.title!
+        
+        self.title = reward.title!
+        self.details = reward.details!
+        self.month = String(reward.month)
+        self.year =  String(reward.year)
+        self.cardType = reward.cardType!
+        self.value = String(reward.value)
+        self.recurrencePeriod = reward.recurrencePeriod!
+        self.expirationDate = reward.expirationDate!
         
         self.cardFetchRequest = FetchRequest<CardType>(entity: CardType.entity(),
             sortDescriptors: [
@@ -46,36 +56,35 @@ struct AddRewardPage: View {
     
     var body: some View {
         ScrollView {
-            Text("Add \(recurrencePeriod) Reward ⭐️")
+            Text("Update \(recurrencePeriod) Reward ⭐️")
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: 200, maxHeight: 50)
                 .font(.title)
             VStack {
-                TextField("Reward Title", text: $titleFieldText)
+                TextField("Reward Title", text: $title)
                     .padding(.horizontal)
                     .frame(height: 55)
                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
                     .cornerRadius(10)
                 
-                TextField("Reward Details / Description", text: $detailsFieldText)
+                TextField("Reward Details / Description", text: $details)
                     .padding(.horizontal)
                     .frame(height: 120)
                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
                     .cornerRadius(10)
                 
                 if(self.recurrencePeriod == "year" || self.recurrencePeriod == "month") {
-                    Picker("Year", selection: $selectedYear) {
-                        ForEach([2022, 2023, 2024, 2025, 2026], id: \.self) {
-                            Text(String($0))
-                        }
+                    Picker("Year", selection: $year) {
+                        Text(String(year))
+                            .tag(year)
                     }
                 }
                 else if recurrencePeriod == "once"  {
                     Button(action: {
                         isDatePickerPresented.toggle()
                     }) {
-                        Text(selectedDate != nil ? formattedDate(selectedDate!) : "Select a Date")
+                        Text(formattedDate(expirationDate))
                             .padding()
                             .background(Color.blue)
                             .foregroundColor(.white)
@@ -85,8 +94,8 @@ struct AddRewardPage: View {
                         // DatePicker in a sheet
                         VStack {
                             DatePicker("Select a date", selection: Binding(
-                                get: { selectedDate ?? Date() },
-                                set: { selectedDate = $0 }
+                                get: { expirationDate },
+                                set: { expirationDate = $0 }
                             ), displayedComponents: [.date])
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .padding()
@@ -102,9 +111,7 @@ struct AddRewardPage: View {
                 
                 VStack {
                     if !cardFetchRequest.wrappedValue.isEmpty {
-                        Picker("Card", selection: $selectedCardType) {
-                            Text("None")
-                                .tag("None")
+                        Picker("Card", selection: $cardType) {
                             ForEach(cardFetchRequest.wrappedValue, id: \.self) { card in
                                 Text(card.cardName ?? "")
                                     .tag(card.cardName ?? "")
@@ -116,15 +123,9 @@ struct AddRewardPage: View {
                             .foregroundColor(.gray)
                     }
                 }
-                .onAppear {
-                    print("Appeared")
-                    if selectedCardType == "", let firstCard = cardFetchRequest.wrappedValue.first?.cardName {
-                        selectedCardType = firstCard
-                    }
-                }
                 .padding()
 
-                TextField("Reward \(recurrencePeriod) Value", text: $valueFieldText)
+                TextField("Reward \(recurrencePeriod) Value", text: $value)
                     .keyboardType(.numberPad)
                     .padding(.horizontal)
                     .frame(height: 55)
@@ -132,7 +133,7 @@ struct AddRewardPage: View {
                     .cornerRadius(10)
                     .multilineTextAlignment(.center)
                 
-                Button(action: onSavePressed, label: {
+                Button(action: updateReward, label: {
                     Text("Save".uppercased())
                         .foregroundColor(.white)
                         .font(.headline)
@@ -154,57 +155,31 @@ struct AddRewardPage: View {
         
     }
     
-    private func onSavePressed() {
-        if(selectedCardType == "None") {
-            showInvalidAlert = true
-            return
-        }
+    private func updateReward() {
+        let requestRewardEntity = NSFetchRequest<Reward>(entityName: "Reward")
+        requestRewardEntity.predicate = NSPredicate(format: "title == %@ and year == %@", oldRewardTitle, year)
         
-        if recurrencePeriod == "year" {
-            let newReward: Reward = createReward()
-            newReward.recurrencePeriod = "year"
-            newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: 12)
-            newReward.month = -1
-        }
-        else if recurrencePeriod == "month" {
-            for month in 1...12 {
-                let newReward: Reward = createReward()
-                newReward.recurrencePeriod = "month"
-                newReward.month = Int16(month)
-                newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: month)
-            }
-        }
-        else if recurrencePeriod == "once" {
-            let newReward: Reward = createReward()
-            newReward.recurrencePeriod = "once"
-            newReward.expirationDate = selectedDate
-            newReward.year = Int16(Calendar.current.component(.year, from: Date()))
-            newReward.month = -1
-        }
-        
-        saveContext()
-        self.presentationMode.wrappedValue.dismiss()
-    }
-    
-    private func createReward() -> Reward {
-        let newReward = Reward(context: viewContext)
-        newReward.title = titleFieldText
-        newReward.details = detailsFieldText
-        newReward.value = Float(valueFieldText) ?? -1
-        newReward.year = Int16(selectedYear)
-        newReward.cardType = selectedCardType
-        newReward.redeemed = false
-        
-        return newReward
-    }
-    
-    private func saveContext() {
         do {
+            let rewardsToUpdate: [Reward] = try viewContext.fetch(requestRewardEntity)
+            
+            for rewardToUpdate in rewardsToUpdate {
+                rewardToUpdate.title = self.title
+                rewardToUpdate.details = self.details
+                rewardToUpdate.cardType = self.cardType
+                rewardToUpdate.value = Float(self.value) ?? 0
+                
+                if recurrencePeriod == "once" {
+                    rewardToUpdate.expirationDate = self.expirationDate
+                }
+            }
+            
             try viewContext.save()
+            print("Card updated successfully.")
         } catch {
-            let error = error as NSError
-            fatalError("Unresolved error: \(error)")
+            print("Error updating card: \(error.localizedDescription)")
         }
+        
+        self.presentationMode.wrappedValue.dismiss()
     }
     
     private func formattedDate(_ date: Date) -> String {
@@ -231,7 +206,7 @@ struct AddRewardPage: View {
     }
 }
 
-struct AddRewardView_Previews: PreviewProvider {
+struct EditRewardPage_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             //AddRewardPage(recurrencePeriod: "One-Time")

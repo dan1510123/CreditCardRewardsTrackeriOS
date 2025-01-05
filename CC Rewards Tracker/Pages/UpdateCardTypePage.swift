@@ -8,13 +8,13 @@
 import SwiftUI
 import CoreData
 
-struct EditCardTypePage: View {
+struct UpdateCardTypePage: View {
     @Environment(\.presentationMode) private var presentationMode
     let viewContext: NSManagedObjectContext
     
     let cardName: String
     @State private var annualFee: String
-    @State var cardColor: Color = .gray
+    @State private var cardColor: Color = .gray
 
     
     init(viewContext: NSManagedObjectContext, cardName: String, annualFee: String, cardColorData: Data) {

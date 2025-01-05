@@ -30,7 +30,7 @@ struct EditCardsPage: View {
             List {
                 ForEach(fetchRequest.wrappedValue) { card in
                     NavigationLink(
-                        destination: EditCardTypePage(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorData: card.cardColor!),
+                        destination: UpdateCardTypePage(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorData: card.cardColor!),
                         label: {
                             HStack {
                                 Text(card.cardName ?? "Error")
