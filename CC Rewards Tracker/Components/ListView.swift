@@ -46,7 +46,11 @@ struct ListView: View {
         if adminMode.wrappedValue {
             List {
                 ForEach(fetchRequest.wrappedValue) { reward in
-                    ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                    NavigationLink(
+                        destination: UpdateRewardPage(viewContext: viewContext, reward: reward)
+                    ) {
+                        ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                    }
                 }
                 .onDelete(perform: deleteTasks)
             }
