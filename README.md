@@ -1,8 +1,8 @@
-# Amex Rewards Tracker
+# Credit Card Rewards Tracker iOS
 
-An iPhone app where you can track all of the rewards that you are redeeming with your Amex Gold / Platinum Card(s).
+An iPhone app where you can track all of the rewards that you are redeeming with your credit cards, initially inspired by my want to track rewards for my American Express cards.
 
-This app was made because the Amex app and online AmericanExpress website do not have any good UI to display how
+This app was made because the Amex app and online American Express website do not have any good UI to display how
 much of the total possible rewards you have take advantage of (probably because this makes it harder to track and
 fully take advantage of).
 
