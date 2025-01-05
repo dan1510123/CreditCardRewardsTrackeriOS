@@ -13,6 +13,7 @@ struct FullTabView: View {
     @State private var isDeviceShaken: Bool = false
     @State private var showAdminAlert: Bool = false
     @State private var adminMode: Bool = false
+    @State private var specialAdminMode: Bool = false
     
     @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
     let currentMonth: Int = Calendar.current.component(.month, from: Date())
@@ -28,7 +29,7 @@ struct FullTabView: View {
                 .edgesIgnoringSafeArea(.all)
             
             TabView {
-                LazyView(SummaryTab(viewContext: viewContext, year: $selectedYear, adminMode: $adminMode))
+                LazyView(SummaryTab(viewContext: viewContext, year: $selectedYear, specialAdminMode: $specialAdminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet.rectangle")
@@ -86,11 +87,11 @@ struct FullTabView: View {
                 title: Text("Admin Mode"),
                 message: Text("Would you like to switch to Admin Mode?"),
                 primaryButton: .default(Text("Yes")) {
-                    adminMode = true
+                    specialAdminMode = true
                     showAdminAlert = false
                 },
                 secondaryButton: .cancel(Text("No")) {
-                    adminMode = false
+                    specialAdminMode = false
                     showAdminAlert = false
                 }
             )
