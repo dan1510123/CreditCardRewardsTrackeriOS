@@ -10,7 +10,7 @@ import CoreData
 
 struct SummaryTab: View {
     
-    @Binding var adminMode: Bool
+    @Binding var specialAdminMode: Bool
     
     @State var isSettingsPresented:Bool = false
     
@@ -25,10 +25,10 @@ struct SummaryTab: View {
         cards.reduce(0) { $0 + $1.annualFee }
     }
     
-    init(viewContext: NSManagedObjectContext, year: Binding<Int>, adminMode: Binding<Bool>) {
+    init(viewContext: NSManagedObjectContext, year: Binding<Int>, specialAdminMode: Binding<Bool>) {
         self.viewContext = viewContext
+        self._specialAdminMode = specialAdminMode
         self._year = year
-        self._adminMode = adminMode
         
         fetchRequest = FetchRequest<CardType>(entity: CardType.entity(),
             sortDescriptors: [
@@ -55,32 +55,32 @@ struct SummaryTab: View {
                     )
                 }
                 .background(Color.white)
-                
-                if adminMode {
-                    Button(action: {
-                        self.adminMode.toggle()
-                    }) {
-                        Text("LEAVE ADMIN MODE")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
-                            .clipShape(Capsule())
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 10)
-                }
             }
             .sheet(isPresented: $isSettingsPresented) {
                 SettingsView(isSettingsPresented: $isSettingsPresented)
+            }
+            
+            if specialAdminMode {
+                Button(action: {
+                    self.specialAdminMode.toggle()
+                }) {
+                    Text("LEAVE SPECIAL ADMIN MODE")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(#colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)))
+                        .clipShape(Capsule())
+                }
+                .padding(.horizontal, 40)
+                .padding(.bottom, 10)
             }
         }
     }
     
     private func getLeadingButton() -> some View {
         Group {
-            if adminMode {
+            if specialAdminMode {
                 Button(action: {
                     isSettingsPresented = true
                 })
