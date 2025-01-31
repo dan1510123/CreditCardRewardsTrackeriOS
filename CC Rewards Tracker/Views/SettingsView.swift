@@ -85,7 +85,7 @@ struct SettingsView: View {
             Button(action: {
                 showPrefillRicardoAlert = true
             }) {
-                Text("Add Dan's Rewards")
+                Text("Add Dan's 2024 Rewards")
                     .font(.title2)
                     .frame(maxWidth: .infinity)
                     .padding()
