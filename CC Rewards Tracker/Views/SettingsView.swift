@@ -18,7 +18,7 @@ struct SettingsView: View {
     @State private var showPrefillRicardoAlert = false
     @State private var showResetGoldAlert = false
     
-    let currentYear: Int = Calendar.current.component(.year, from: Date())
+    let currentYear: Int = 2024
     
     var body: some View {
         VStack(spacing: 20) {
