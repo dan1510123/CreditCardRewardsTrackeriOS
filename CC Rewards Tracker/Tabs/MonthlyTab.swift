@@ -35,7 +35,6 @@ struct MonthlyTab: View {
                     .navigationTitle(getMonthYearString())
                     .foregroundColor(.primary)
                     .navigationBarItems(
-                        leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
                     .toolbar {

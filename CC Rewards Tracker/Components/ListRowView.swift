@@ -15,52 +15,71 @@ struct ListRowView: View {
     let details: String
     let value: Float
     @State var redeemed: Bool
+    var adminMode: Bool
+    
+    init(reward: Reward, title: String, details: String, value: Float, redeemed: Bool, adminMode: Bool = false) {
+        self.reward = reward
+        self.title = title
+        self.details = details
+        self.value = value
+        self.redeemed = redeemed
+        self.adminMode = adminMode
+    }
     
     var body: some View {
-        HStack {
-            getCardIcon()
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 60, height: 40)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(title)
-                        .font(.headline)
-                    Spacer()
-                    Text("\(String(format: "$%.2f", value))")
-                        .font(.subheadline)
-                }
-                HStack {
-                    Text(details)
-                        .font(.subheadline)
-                        .lineLimit(2)
-                    Spacer()
-                    if reward.recurrencePeriod == "once" {
-                        Text("Expires " + formatDateToString(date: reward.expirationDate!, format: "MM/dd"))
+        ZStack {
+            HStack {
+                getCardIcon()
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 60, height: 40)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text(title)
+                            .font(.headline)
+                        Spacer()
+                        Text("\(String(format: "$%.2f", value))")
                             .font(.subheadline)
                     }
+                    HStack {
+                        Text(details)
+                            .font(.subheadline)
+                            .lineLimit(2)
+                        Spacer()
+                        if reward.recurrencePeriod == "once" {
+                            Text("Expires " + formatDateToString(date: reward.expirationDate!, format: "MM/dd"))
+                                .font(.subheadline)
+                        }
+                    }
+                }
+                
+                if !adminMode {
+                    Button(action: {
+                        withAnimation {
+                            onCheckPressed()
+                        }
+                    }) {
+                        Image(systemName: redeemed ? "checkmark.circle.fill" : "checkmark.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(redeemed ? nil : .gray)
+                            .animation(.easeInOut, value: redeemed)
+                    }
+                    .padding(.leading, 10)
                 }
             }
+            .padding()
+            .background(getBackgroundColor())
+            .cornerRadius(12)
+            .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 3)
             
-            Button(action: {
-                withAnimation {
-                    onCheckPressed()
-                }
-            }) {
-                Image(systemName: redeemed ? "checkmark.circle.fill" : "checkmark.circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(redeemed ? nil : .gray)
-                    .animation(.easeInOut, value: redeemed)
+            if adminMode {
+                NavigationLink("", destination: UpdateRewardPage(viewContext: viewContext, reward: reward))
+                    .opacity(0)
             }
-            .padding(.leading, 10)
         }
-        .padding()
-        .background(getBackgroundColor())
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 3)
-        .listRowInsets(EdgeInsets()) // Allow full-width custom styling
+        .listRowInsets(EdgeInsets())
     }
     
     private func getCardIcon() -> Image {

@@ -31,7 +31,6 @@ struct AnnualTab: View {
                 ListView(index: index, recurrencePeriod: recurrencePeriod, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle("\(year) Annual Rewards".replacingOccurrences(of: ",", with: ""))
                     .navigationBarItems(
-                        leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
                     .toolbar {
