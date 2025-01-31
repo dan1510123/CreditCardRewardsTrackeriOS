@@ -31,6 +31,7 @@ struct AnnualTab: View {
                 ListView(index: index, recurrencePeriod: recurrencePeriod, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle("\(year) Annual Rewards".replacingOccurrences(of: ",", with: ""))
                     .navigationBarItems(
+                        leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
                     .toolbar {
@@ -61,10 +62,7 @@ struct AnnualTab: View {
     
     private func getLeadingButton() -> some View {
         Group {
-            if adminMode {
-                EditButton()
-            }
-            else if year > 2020 {
+            if !adminMode && year > 2020 {
                 Button(action:  {
                     year = year - 1
                 })
