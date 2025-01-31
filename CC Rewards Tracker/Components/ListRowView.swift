@@ -104,27 +104,35 @@ struct ListRowView: View {
     }
     
     private func getBackgroundColor() -> Color {
-        if(redeemed) {
-            return Color(#colorLiteral(red: 0, green: 1, blue: 0.4970139265, alpha: 1))
-        }
-        else if (reward.cardType == "Amex Gold") {
-            return Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
+        var currentColor: Color
+        
+        if (reward.cardType == "Amex Gold") {
+            currentColor = Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
         }
         else if (reward.cardType == "Amex Platinum") {
-            return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
+            currentColor = Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
         }
         else if (reward.cardType == "Amex Delta Gold") {
-            return Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
+            currentColor = Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
         }
         else if (reward.cardType == "Amex Delta Reserve") {
-            return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
+            currentColor = Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
         }
         else if (reward.cardType == "Amex Hilton Aspire") {
-            return Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
+            currentColor = Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
         }
         else{
-            return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+            currentColor = Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
+        
+        if (adminMode) {
+            currentColor = currentColor.opacity(0.5)
+        }
+        else if (redeemed) {
+            currentColor = Color(#colorLiteral(red: 0, green: 1, blue: 0.4970139265, alpha: 1))
+        }
+        
+        return currentColor
     }
     
     func formatDateToString(date: Date, format: String) -> String {
