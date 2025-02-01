@@ -12,7 +12,8 @@ struct AddCardPage: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var cardNameFieldText: String = ""
-    @State var annualFeeFieldText: String = ""
+    @State var annualFeeValue: Int16 = 0
+    @State var annualFeeFieldText: String = "0"
     @State var iconName: String = "creditCardIcon"
     @State var selectedColor: Color = Color.gray
     
@@ -49,6 +50,7 @@ struct AddCardPage: View {
             }
             .onChange(of: selectedPreset) { newPresetSelection in
                 self.cardNameFieldText = newPresetSelection.name
+                self.annualFeeValue = Int16(newPresetSelection.annualFee)
                 self.annualFeeFieldText = String(newPresetSelection.annualFee)
                 self.iconName = newPresetSelection.iconName
                 self.selectedColor = newPresetSelection.color
@@ -71,6 +73,14 @@ struct AddCardPage: View {
                         .frame(height: 55)
                         .cornerRadius(10)
                         .multilineTextAlignment(.center)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: annualFeeFieldText) { newValue in
+                            if let intValue = Int16(newValue) {
+                                self.annualFeeValue = intValue
+                            } else {
+                                self.annualFeeFieldText = "\(self.annualFeeValue)"
+                            }
+                        }
                 }
                 
                 Section(header: Text("Card Color Representation").font(.caption).foregroundColor(.gray)) {
@@ -98,7 +108,7 @@ struct AddCardPage: View {
     private func onSavePressed() {
         let newCardType = CardType(context: viewContext)
         newCardType.cardName = cardNameFieldText
-        newCardType.annualFee = Int16(annualFeeFieldText) ?? 0
+        newCardType.annualFee = annualFeeValue
         newCardType.cardColor = colorToData(selectedColor)
         
         saveContext()

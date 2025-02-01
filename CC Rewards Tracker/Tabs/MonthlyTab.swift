@@ -66,10 +66,7 @@ struct MonthlyTab: View {
     
     private func getLeadingButton() -> some View {
         Group {
-            if adminMode {
-                    EditButton()
-                        .frame(alignment: .leading)
-            } else {
+            if !adminMode {
                 if month != 1 {
                     Button(action:  {
                         year = year + (Int)((month + 10) / 12 - 1)
