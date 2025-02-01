@@ -17,6 +17,9 @@ struct ListRowView: View {
     @State var redeemed: Bool
     var adminMode: Bool
     
+    var cardFetchRequest: FetchRequest<CardType>
+    var cardFetchResult: FetchedResults<CardType> { cardFetchRequest.wrappedValue }
+    
     init(reward: Reward, title: String, details: String, value: Float, redeemed: Bool, adminMode: Bool = false) {
         self.reward = reward
         self.title = title
@@ -24,6 +27,11 @@ struct ListRowView: View {
         self.value = value
         self.redeemed = redeemed
         self.adminMode = adminMode
+        
+        cardFetchRequest = FetchRequest<CardType>(
+            entity: CardType.entity(),
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "cardName == \"\(reward.cardType!)\""))
     }
     
     var body: some View {
@@ -106,22 +114,9 @@ struct ListRowView: View {
     private func getBackgroundColor() -> Color {
         var currentColor: Color
         
-        if (reward.cardType == "Amex Gold") {
-            currentColor = Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
-        }
-        else if (reward.cardType == "Amex Platinum") {
-            currentColor = Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
-        }
-        else if (reward.cardType == "Amex Delta Gold") {
-            currentColor = Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
-        }
-        else if (reward.cardType == "Amex Delta Reserve") {
-            currentColor = Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
-        }
-        else if (reward.cardType == "Amex Hilton Aspire") {
-            currentColor = Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))
-        }
-        else{
+        if let firstCard = cardFetchResult.first, let cardColorData = firstCard.cardColor {
+            currentColor = dataToColor(cardColorData)
+        } else {
             currentColor = Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
         
@@ -139,6 +134,13 @@ struct ListRowView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
+    }
+    
+    func dataToColor(_ data: Data) -> Color {
+        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
+            return Color(uiColor)
+        }
+        return .gray
     }
 
     private func onCheckPressed() {
