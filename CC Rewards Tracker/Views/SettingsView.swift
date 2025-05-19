@@ -18,7 +18,7 @@ struct SettingsView: View {
     @State private var showPrefillRicardoAlert = false
     @State private var showResetGoldAlert = false
     
-    let currentYear: Int = 2024
+    let currentYear: Int = 2025
     
     var body: some View {
         VStack(spacing: 20) {
@@ -85,7 +85,7 @@ struct SettingsView: View {
             Button(action: {
                 showPrefillRicardoAlert = true
             }) {
-                Text("Add Dan's 2024 Rewards")
+                Text("Add Dan's Rewards")
                     .font(.title2)
                     .frame(maxWidth: .infinity)
                     .padding()
