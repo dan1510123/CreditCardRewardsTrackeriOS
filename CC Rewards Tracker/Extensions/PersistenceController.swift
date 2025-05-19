@@ -32,7 +32,7 @@ struct PersistenceController {
         }
         
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.danielluo.CC-Rewards-Tracker")
+        description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.danielluo.CCRT")
         
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
@@ -42,5 +42,32 @@ struct PersistenceController {
         
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    }
+    
+    func loadPersistentStore(container: NSPersistentContainer, completion: @escaping (NSPersistentStoreDescription, Error?) -> Void) {
+        container.loadPersistentStores { description, error in
+            if let error = error as NSError? {
+                // Check if error is migration/incompatibility error
+                let isMigrationError = (error.domain == NSCocoaErrorDomain) &&
+                    (error.code == NSPersistentStoreIncompatibleVersionHashError || error.code == NSMigrationMissingSourceModelError)
+                
+                if isMigrationError {
+                    // Delete incompatible store
+                    if let url = description.url {
+                        do {
+                            try container.persistentStoreCoordinator.destroyPersistentStore(at: url, ofType: NSSQLiteStoreType, options: nil)
+                            print("Deleted incompatible store at \(url). Retrying load...")
+                            
+                            // Retry loading store after deletion
+                            container.loadPersistentStores(completionHandler: completion)
+                            return
+                        } catch {
+                            print("Failed to delete incompatible store: \(error)")
+                        }
+                    }
+                }
+            }
+            completion(description, error)
+        }
     }
 }

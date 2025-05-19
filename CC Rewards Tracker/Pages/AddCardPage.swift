@@ -109,7 +109,7 @@ struct AddCardPage: View {
         let newCardType = CardType(context: viewContext)
         newCardType.cardName = cardNameFieldText
         newCardType.annualFee = annualFeeValue
-        newCardType.cardColor = colorToData(selectedColor)
+        newCardType.cardColor = selectedColor.toHex(includeAlpha: true)
         
         saveContext()
         self.presentationMode.wrappedValue.dismiss()
@@ -122,18 +122,6 @@ struct AddCardPage: View {
             let error = error as NSError
             fatalError("Unresolved error: \(error)")
         }
-    }
-    
-    func colorToData(_ color: Color) -> Data? {
-        let uiColor = UIColor(color)
-        return try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
-    }
-    
-    func dataToColor(_ data: Data) -> Color {
-        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
-            return Color(uiColor)
-        }
-        return .gray
     }
 }
 

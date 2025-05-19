@@ -114,8 +114,8 @@ struct ListRowView: View {
     private func getBackgroundColor() -> Color {
         var currentColor: Color
         
-        if let firstCard = cardFetchResult.first, let cardColorData = firstCard.cardColor {
-            currentColor = dataToColor(cardColorData)
+        if let firstCard = cardFetchResult.first, let cardColorHexString = firstCard.cardColor {
+            currentColor = Color(hex: cardColorHexString)!
         } else {
             currentColor = Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
@@ -134,13 +134,6 @@ struct ListRowView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
-    }
-    
-    func dataToColor(_ data: Data) -> Color {
-        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
-            return Color(uiColor)
-        }
-        return .gray
     }
 
     private func onCheckPressed() {
