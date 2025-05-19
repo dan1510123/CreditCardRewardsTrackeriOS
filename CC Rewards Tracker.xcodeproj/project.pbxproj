@@ -43,6 +43,7 @@
 		0967ED162CC851AA00EF4DFA /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		0977A6232D29B18C00593846 /* CardTypePresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTypePresets.swift; sourceTree = "<group>"; };
 		0977A6272D2A325500593846 /* UpdateRewardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRewardPage.swift; sourceTree = "<group>"; };
+		097DC1E62DDACCD90053F53D /* CC Rewards Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CC Rewards Tracker.entitlements"; sourceTree = "<group>"; };
 		098A71CB26897E4B00DE0134 /* ProgressBarWrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarWrapped.swift; sourceTree = "<group>"; };
 		09C2EE9E26751836009D992B /* MonthlyTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyTab.swift; sourceTree = "<group>"; };
 		09C964A42D28D1910053772B /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 		09F6E3FD26744B4900F37EC9 /* CC Rewards Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				097DC1E62DDACCD90053F53D /* CC Rewards Tracker.entitlements */,
 				0977A6222D29B12800593846 /* Data */,
 				0977A6212D29AE6300593846 /* Tabs */,
 				0927702D2CC5645600EF949F /* Extensions */,
@@ -410,6 +412,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CC Rewards Tracker/CC Rewards Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9KD2BDVC27;
@@ -433,6 +436,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CC Rewards Tracker/CC Rewards Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9KD2BDVC27;
