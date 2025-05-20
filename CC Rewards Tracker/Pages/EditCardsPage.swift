@@ -26,29 +26,55 @@ struct EditCardsPage: View {
     }
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(fetchRequest.wrappedValue) { card in
-                    NavigationLink(
-                        destination: UpdateCardTypePage(viewContext: viewContext, cardName: card.cardName!, annualFee: String(card.annualFee), cardColorHexString: card.cardColor!),
-                        label: {
-                            HStack {
-                                Text(card.cardName ?? "Error")
-                                    .font(.headline)
-                                Spacer()
-                                Text(String(card.annualFee))
-                                    .foregroundColor(.gray)
+        NavigationStack {
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach(fetchRequest.wrappedValue) { card in
+                        let cardColorHex = card.cardColor!
+                        let cardColor = Color(hex: cardColorHex) ?? Color.gray
+                        NavigationLink(
+                            destination: UpdateCardTypePage(
+                                viewContext: viewContext,
+                                cardName: card.cardName ?? "",
+                                annualFee: String(card.annualFee),
+                                cardColorHexString: card.cardColor ?? "#FFFFFF"
+                            )
+                        ) {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text(card.cardName ?? "Error")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+
+                                    Spacer()
+
+                                    Text("$\(String(card.annualFee))")
+                                        .font(.subheadline)
+                                        .foregroundColor(.primary)
+                                }
                             }
-                            .padding(.vertical, 10)
-                        })
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(cardColor)
+                                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                            )
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                deleteTasks(card)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
+                    }
                 }
-                .onDelete(perform: deleteTasks)
-                .background(Color.white)
+                .navigationTitle("My Tracked Cards")
+                .navigationBarItems(
+                    trailing: getTrailingButton()
+                )
+                .padding()
             }
-            .navigationTitle("My Tracked Cards")
-            .navigationBarItems(
-                trailing: getTrailingButton()
-            )
         }
     }
     
@@ -58,24 +84,9 @@ struct EditCardsPage: View {
         }
     }
     
-    private func deleteTasks(offsets: IndexSet) {
-        withAnimation {
-            offsets.forEach {
-                let cardToDelete: CardType = cards[$0]
-                let cardNameToDelete: String = cardToDelete.cardName ?? ""
-                let requestCardEntity = NSFetchRequest<CardType>()
-                requestCardEntity.entity = CardType.entity()
-                requestCardEntity.predicate = NSPredicate(format: "cardName == \"\(cardNameToDelete)\"")
-                do {
-                    let cardToDelete: [CardType] = try viewContext.fetch(requestCardEntity)
-                    cardToDelete.forEach(viewContext.delete)
-                }
-                catch {
-                    print("Error in deleting items: \($0)")
-                }
-            }
-            saveContext()
-        }
+    private func deleteTasks(_ cardToDelete: CardType) {
+        viewContext.delete(cardToDelete)
+        saveContext()
     }
     
     private func saveContext() {
