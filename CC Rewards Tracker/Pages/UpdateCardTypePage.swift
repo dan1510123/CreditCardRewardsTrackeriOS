@@ -14,14 +14,14 @@ struct UpdateCardTypePage: View {
     
     let cardName: String
     @State private var annualFee: String
-    @State private var cardColor: Color = .gray
+    @State private var cardColor: Color
 
     
-    init(viewContext: NSManagedObjectContext, cardName: String, annualFee: String, cardColorData: Data) {
+    init(viewContext: NSManagedObjectContext, cardName: String, annualFee: String, cardColorHexString: String) {
         self.viewContext = viewContext
         self.cardName = cardName
         self.annualFee = annualFee
-        self.cardColor = dataToColor(cardColorData)
+        self.cardColor = Color(hex: cardColorHexString)!
     }
     var body: some View {
         Form {
@@ -60,7 +60,7 @@ struct UpdateCardTypePage: View {
             for card in cardsToEdit {
                 card.cardName = cardName
                 card.annualFee = Int16(annualFee) ?? 0
-                card.cardColor = colorToData(cardColor)
+                card.cardColor = cardColor.toHex()
             }
 
             try viewContext.save()
@@ -70,18 +70,6 @@ struct UpdateCardTypePage: View {
         }
         
         self.presentationMode.wrappedValue.dismiss()
-    }
-    
-    func colorToData(_ color: Color) -> Data? {
-        let uiColor = UIColor(color)
-        return try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
-    }
-    
-    func dataToColor(_ data: Data) -> Color {
-        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
-            return Color(uiColor)
-        }
-        return .gray
     }
 }
     
