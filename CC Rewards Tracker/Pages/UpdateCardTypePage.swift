@@ -14,7 +14,7 @@ struct UpdateCardTypePage: View {
     
     let cardName: String
     @State private var annualFee: String
-    @State private var cardColor: Color = .gray
+    @State private var cardColor: Color
 
     
     init(viewContext: NSManagedObjectContext, cardName: String, annualFee: String, cardColorHexString: String) {
