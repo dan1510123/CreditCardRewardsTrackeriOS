@@ -42,6 +42,11 @@ struct EditCardsPage: View {
                         ) {
                             VStack(alignment: .leading) {
                                 HStack {
+                                    getCardIcon(card: card).resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 40)
+                                        .cornerRadius(3)
+                                    
                                     Text(card.cardName ?? "Error")
                                         .font(.headline)
                                         .foregroundColor(.primary)
@@ -95,6 +100,27 @@ struct EditCardsPage: View {
         } catch {
             let error = error as NSError
             fatalError("Unresolved error: \(error)")
+        }
+    }
+    
+    private func getCardIcon(card: CardType) -> Image {
+        if (card.cardName == "Amex Gold") {
+            return Image("amexGoldCardIcon")
+        }
+        else if (card.cardName == "Amex Platinum") {
+            return Image("amexPlatinumCardIcon")
+        }
+        else if (card.cardName == "Amex Delta Gold") {
+            return Image("amexDeltaGoldCardIcon")
+        }
+        else if (card.cardName == "Amex Delta Reserve") {
+            return Image("amexDeltaReserveCardIcon")
+        }
+        else if (card.cardName == "Amex Hilton Aspire") {
+            return Image("amexHiltonAspireCardIcon")
+        }
+        else{
+            return Image("creditCardIcon")
         }
     }
 }
