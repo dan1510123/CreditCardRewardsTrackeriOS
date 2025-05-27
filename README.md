@@ -22,3 +22,14 @@ Here's an example of some app usage:
     <img src="images/overview.gif" alt="drawing" style="width:200px;"/>
     <img src="images/admin.gif" alt="drawing" style="width:200px;"/>
 </div>
+
+
+Privacy Policy
+
+Credit Card Rewards Tracker does not collect, store, or share any personal data.
+
+All data you enter into the app, including credit card information and rewards tracking, is stored locally on your device or in your personal iCloud storage.
+
+We respect your privacy and are committed to keeping your data secure and private.
+
+If you have any questions or concerns about this privacy policy, please contact us at danielyuluo8@gmail.com
