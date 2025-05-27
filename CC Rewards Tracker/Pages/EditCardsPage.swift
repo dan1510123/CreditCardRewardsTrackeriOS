@@ -27,59 +27,56 @@ struct EditCardsPage: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(fetchRequest.wrappedValue) { card in
-                        let cardColorHex = card.cardColor!
-                        let cardColor = Color(hex: cardColorHex) ?? Color.gray
-                        NavigationLink(
-                            destination: UpdateCardTypePage(
-                                viewContext: viewContext,
-                                cardName: card.cardName ?? "",
-                                annualFee: String(card.annualFee),
-                                cardColorHexString: card.cardColor ?? "#FFFFFF"
-                            )
-                        ) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    getCardIcon(card: card).resizable()
-                                        .scaledToFit()
-                                        .frame(width: 60, height: 40)
-                                        .cornerRadius(3)
-                                    
-                                    Text(card.cardName ?? "Error")
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
+            List {
+                ForEach(fetchRequest.wrappedValue) { card in
+                    let cardColorHex = card.cardColor ?? "#FFFFFF"
+                    let cardColor = Color(hex: cardColorHex) ?? .gray
 
-                                    Spacer()
+                    NavigationLink(
+                        destination: UpdateCardTypePage(
+                            viewContext: viewContext,
+                            cardName: card.cardName ?? "",
+                            annualFee: String(card.annualFee),
+                            cardColorHexString: card.cardColor ?? "#FFFFFF"
+                        )
+                    ) {
+                        HStack {
+                            getCardIcon(card: card).resizable()
+                                .scaledToFit()
+                                .frame(width: 60, height: 40)
+                                .cornerRadius(3)
 
-                                    Text("$\(String(card.annualFee))")
-                                        .font(.subheadline)
-                                        .foregroundColor(.primary)
-                                }
-                            }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(cardColor)
-                                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                            )
+                            Text(card.cardName ?? "Error")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+
+                            Spacer()
+
+                            Text("$\(String(card.annualFee))")
+                                .font(.subheadline)
+                                .foregroundColor(.primary)
                         }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                deleteTasks(card)
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(cardColor)
+                                .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                        )
+                        .padding(.vertical, 6)
+                        .listRowSeparator(.hidden)
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            deleteTasks(card)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
                         }
                     }
                 }
-                .navigationTitle("My Tracked Cards")
-                .navigationBarItems(
-                    trailing: getTrailingButton()
-                )
-                .padding()
             }
+            .listStyle(.plain)
+            .navigationTitle("My Tracked Cards")
+            .navigationBarItems(trailing: getTrailingButton())
         }
     }
     
@@ -91,6 +88,18 @@ struct EditCardsPage: View {
     
     private func deleteTasks(_ cardToDelete: CardType) {
         viewContext.delete(cardToDelete)
+        
+        let requestFullYear = NSFetchRequest<Reward>()
+        requestFullYear.entity = Reward.entity()
+        requestFullYear.predicate = NSPredicate(format: "cardType == \"\(String(cardToDelete.cardName!))\" and year == 2025")
+        do {
+            let rewardsToDelete: [Reward] = try viewContext.fetch(requestFullYear)
+            rewardsToDelete.forEach(viewContext.delete)
+        }
+        catch {
+            print("Error in deleting Rewards for card: \(cardToDelete.cardName!)")
+        }
+        
         saveContext()
     }
     
