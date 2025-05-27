@@ -24,7 +24,7 @@ Here's an example of some app usage:
 </div>
 
 
-Privacy Policy
+# Privacy Policy
 
 Credit Card Rewards Tracker does not collect, store, or share any personal data.
 
